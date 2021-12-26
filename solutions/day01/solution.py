@@ -1,6 +1,3 @@
-import os
-
-
 with open('input.txt') as fh:
     readings = list(map(int, fh.readlines()))
 

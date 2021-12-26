@@ -1,5 +1,3 @@
-import os
-
 with open('input.txt') as fh:
     commands = [{
         'direction': line.split(' ')[0],

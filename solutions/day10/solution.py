@@ -4,13 +4,6 @@ import numpy as np
 with open('input.txt') as fh:
     lines = [line.strip() for line in fh]
 
-error_scores = {
-    ')': 3,
-    ']': 57,
-    '}': 1197,
-    '>': 25137
-}
-
 brackets = {
     '(': ')',
     '[': ']',
@@ -21,7 +14,7 @@ brackets = {
 
 def closing_sequence(line):
     to_close = []
-    for i, c in enumerate(line):
+    for c in line:
         if c in brackets:
             # opening bracket - append expected closing character
             # to open list
@@ -40,15 +33,17 @@ def first_error(line):
             return c
 
 
-errors = [
-    err for line in lines
-    for err in [first_error(line)]
-    if err
-]
-
 print(
     'part 1',
-    sum(error_scores[c] for c in errors)
+    sum([{
+        ')': 3,
+        ']': 57,
+        '}': 1197,
+        '>': 25137
+    }[first_error(line)]
+        for line in lines
+        if first_error(line)
+    ])
 )
 
 

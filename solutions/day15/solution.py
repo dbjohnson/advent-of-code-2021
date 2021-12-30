@@ -45,7 +45,7 @@ def find_path(risk_map):
             ):
                 if 0 <= x < map_width and 0 <= y < map_height:
                     yield Path(
-                        [(x, y)],
+                        self.steps + [(x, y)],
                         self.cost_so_far + risk_map[y][x]
                     )
 

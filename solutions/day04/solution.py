@@ -5,7 +5,7 @@ with open('input.txt') as fh:
     lines = fh.readlines()
 
 
-class Board(object):
+class Board:
     def __init__(self, lines):
         self.values = [
             (int(val), r, c)

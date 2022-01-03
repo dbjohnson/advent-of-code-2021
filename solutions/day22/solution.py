@@ -29,67 +29,69 @@ class Cube:
         else:
             # 2 step decimation - will yield from 3 to 6 decimated cubes
             # TODO: generalize!!
-            # step 1) 1-4 cubes cut through face 1, depending on intersection
-            diffs = []
             d, o = self.dims, other.dims
-
             dim_intersect = [
                 (max(d1[0], d2[0]), min(d1[1], d2[1]))
-                for d1, d2 in zip(self.dims, other.dims)
+                for d1, d2 in zip(d, o)
             ]
+            diff_cubes = []
 
+            # step 1) 1-4 cubes cut through face 1, depending on intersection
             # cube 1: face 1, to left of intersection
             if d[0][0] < o[0][0]:
-                diffs.append(Cube([
+                diff_cubes.append(Cube([
                     (d[0][0], o[0][0]),
                     d[1],
                     d[2]
                 ], self.state))
+
             # cube 2: face 1, to right side of intersection
             if d[0][1] > o[0][1]:
-                diffs.append(Cube([
+                diff_cubes.append(Cube([
                     (o[0][1], d[0][1]),
                     d[1],
                     d[2]
                 ], self.state))
-            # cube 3: face 1 below dim_intersect
+
+            # cube 3: face 1 below intersection
             if d[1][0] < o[1][0]:
-                diffs.append(Cube([
+                diff_cubes.append(Cube([
                     dim_intersect[0],
                     (d[1][0], o[1][0]),
                     d[2]
                 ], self.state))
 
-            # cube 4: face 1 above dim_intersect
+            # cube 4: face 1 above intersection
             if d[1][1] > o[1][1]:
-                diffs.append(Cube([
+                diff_cubes.append(Cube([
                     dim_intersect[0],
                     (o[1][1], d[1][1]),
                     d[2]
                 ], self.state))
 
             # step 2) 0-2 cubes cut through face 2 (rotate cube 90deg about z))
-            # cube 5: face 2 left of intersection
+            # cube 5: face 2  - remainder of slice left of intersection
             if d[2][0] < o[2][0]:
-                diffs.append(Cube([
+                diff_cubes.append(Cube([
                     dim_intersect[0],
                     dim_intersect[1],
                     (d[2][0], o[2][0]),
                 ], self.state))
 
-            # cube 6: face 2 righ of intersection
+            # cube 6: face 2 - remainder of slice right of intersection
             if d[2][1] > o[2][1]:
-                diffs.append(Cube([
+                diff_cubes.append(Cube([
                     dim_intersect[0],
                     dim_intersect[1],
                     (o[2][1], d[2][1]),
                 ], self.state))
 
-            diff_volume = sum(d.volume for d in diffs)
+            # this is tricky - couple sanity checks to make sure we got it right
+            diff_volume = sum(d.volume for d in diff_cubes)
             double_check = self.volume - self.intersect(other).volume
             assert diff_volume == double_check
-            assert not any([d.intersect(other) for d in diffs])
-            return diffs
+            assert not any([d.intersect(other) for d in diff_cubes])
+            return diff_cubes
 
     @property
     def volume(self):

@@ -22,7 +22,7 @@ def react(chain):
 
 # there are only a small number of pairs; cache their expansions
 # at each number of cycles to avoid expanding the same nodes
-# repeatdly
+# repeatedly
 @lru_cache(maxsize=None)
 def expand_chain(chain, cycles, recursed=False):
     if cycles:

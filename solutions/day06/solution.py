@@ -8,6 +8,7 @@ with open('input.txt') as fh:
         for v in line.strip().split(',')
     ]
 
+
 # cache the propagation function since there are only 8
 # unique timer values x 256 days, so 8*256=2048 unique values
 # to calculate; this allows us to efficiently simulate expontential

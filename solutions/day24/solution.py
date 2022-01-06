@@ -1,5 +1,9 @@
 """
-General recursive solution; takes several minutes to run - and a pretty
+My first solution (https://github.com/dbjohnson/advent-of-code-2021/blob/main/solutions/day24/too_clever.py)
+is too clever, and was the only puzzle where I ended up looking for clues
+elsewhere to solve.  I just couldn't let that stand.
+
+So, here's a general recursive solution; takes several minutes to run - and a pretty
 hefy helping of RAM - but requires no mental gymanstics, analysis of the
 instruction set, or anything else too clever.  Also actually implements
 the ALU!
